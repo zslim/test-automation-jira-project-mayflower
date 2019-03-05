@@ -56,7 +56,7 @@ class LoggerTest {
         String loginXpath = "//*[@id='user-options']/a[contains(concat(' ', normalize-space(@class),' '),' login-link ')]";
         Utils.waitForContentLoad(driver, loginXpath);
 
-        boolean isLoginPresent = Utils.isElementPresent(logger.getDriver(), loginXpath);
+        boolean isLoginPresent = Utils.isElementPresent(driver, loginXpath);
         assertTrue(isLoginPresent);
     }
 }
