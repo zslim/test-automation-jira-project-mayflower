@@ -15,6 +15,8 @@ class LoggerTest {
     private String baseUrl = "https://jira.codecool.codecanvas.hu/";
     private Logger logger;
     private String userImageXpath = "//*[@id=\"header-details-user-fullname\"]//img";
+    private static final String JIRA_USER_NAME = System.getenv("JIRA_USER_NAME");
+    private static final String JIRA_PASSWORD = System.getenv("JIRA_PASSWORD");
 
     @BeforeAll
     static void setDriverPath() {
@@ -35,10 +37,8 @@ class LoggerTest {
 
     @org.junit.jupiter.api.Test
     void testLoginValid() {
-        String jiraUsername = System.getenv("JIRA_USER_NAME");
-        String jiraPassword = System.getenv("JIRA_PASSWORD");
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
-        logger.login(jiraUsername, jiraPassword);
+        logger.login(JIRA_USER_NAME, JIRA_PASSWORD);
 
         WebDriver driver = logger.getDriver();
         Util.waitForContentLoad(driver, userImageXpath);
