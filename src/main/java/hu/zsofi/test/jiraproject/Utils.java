@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Util {
+public class Utils {
 
     public static void waitForContentLoad(WebDriver driver, String xpath) {
 
