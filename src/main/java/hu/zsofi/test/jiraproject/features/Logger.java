@@ -1,6 +1,5 @@
 package hu.zsofi.test.jiraproject.features;
 
-import hu.zsofi.test.jiraproject.Util;
 import org.openqa.selenium.*;
 
 
