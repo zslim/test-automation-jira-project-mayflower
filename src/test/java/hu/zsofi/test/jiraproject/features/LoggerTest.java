@@ -4,6 +4,7 @@ import hu.zsofi.test.jiraproject.Utils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,7 +35,7 @@ class LoggerTest {
         logger.closeDriver();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testLoginValid() {
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
         logger.loginValidCredentials();
@@ -45,5 +46,17 @@ class LoggerTest {
         String altString = profileImage.getAttribute("alt");
 
         assertEquals(expectedResult, altString);
+    }
+
+    @Test
+    void testLogout() {
+        logger.logout();
+
+        WebDriver driver = logger.getDriver();
+        String loginXpath = "//*[@id='user-options']/a[contains(concat(' ', normalize-space(@class),' '),' login-link ')]";
+        Utils.waitForContentLoad(driver, loginXpath);
+
+        boolean isLoginPresent = Utils.isElementPresent(logger.getDriver(), loginXpath);
+        assertTrue(isLoginPresent);
     }
 }

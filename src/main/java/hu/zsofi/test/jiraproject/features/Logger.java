@@ -42,7 +42,10 @@ public class Logger {
     public void logout() {
         loginValidCredentials();
 
-        WebElement profileMenu = driver.findElement(By.id("header-details-user-fullname"));
+        String profileMenuXpath = "//*[@id=\"header-details-user-fullname\"]";
+        Utils.waitForContentLoad(driver, profileMenuXpath);
+
+        WebElement profileMenu = driver.findElement(By.xpath(profileMenuXpath));
         profileMenu.click();
 
         String logoutXpath = "//*[@id='log_out']";
