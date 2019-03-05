@@ -11,4 +11,13 @@ public class Utils {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(_driver -> _driver.findElement(By.xpath(xpath)));
     }
+
+    public static boolean isElementPresent(WebDriver driver, String xpath) {
+        try {
+            driver.findElement(By.xpath(xpath));
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 }

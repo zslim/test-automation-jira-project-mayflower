@@ -1,6 +1,6 @@
 package hu.zsofi.test.jiraproject.features;
 
-import hu.zsofi.test.jiraproject.Util;
+import hu.zsofi.test.jiraproject.Utils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +40,7 @@ class LoggerTest {
         logger.loginValidCredentials();
 
         WebDriver driver = logger.getDriver();
-        Util.waitForContentLoad(driver, userImageXpath);
+        Utils.waitForContentLoad(driver, userImageXpath);
         WebElement profileImage = driver.findElement(By.xpath(userImageXpath));
         String altString = profileImage.getAttribute("alt");
 
