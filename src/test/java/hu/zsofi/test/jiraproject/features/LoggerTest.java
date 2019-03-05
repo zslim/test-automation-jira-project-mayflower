@@ -1,8 +1,12 @@
 package hu.zsofi.test.jiraproject.features;
 
+import hu.zsofi.test.jiraproject.Util;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoggerTest {
     private String baseUrl = "https://jira.codecool.codecanvas.hu/";
     private Logger logger;
+    private String userImageXpath = "//*[@id=\"header-details-user-fullname\"]//img";
 
     @BeforeAll
     static void setDriverPath() {
@@ -29,11 +34,17 @@ class LoggerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testLogin() {
+    void testLoginValid() {
         String jiraUsername = System.getenv("JIRA_USER_NAME");
         String jiraPassword = System.getenv("JIRA_PASSWORD");
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
-        String actualResult = logger.login(jiraUsername, jiraPassword);
-        assertEquals(expectedResult, actualResult);
+        logger.login(jiraUsername, jiraPassword);
+
+        WebDriver driver = logger.getDriver();
+        Util.waitForContentLoad(driver, userImageXpath);
+        WebElement profileImage = driver.findElement(By.xpath(userImageXpath));
+        String altString = profileImage.getAttribute("alt");
+
+        assertEquals(expectedResult, altString);
     }
 }
