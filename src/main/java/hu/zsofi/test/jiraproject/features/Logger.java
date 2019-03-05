@@ -1,8 +1,8 @@
 package hu.zsofi.test.jiraproject.features;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import hu.zsofi.test.jiraproject.Util;
+import org.openqa.selenium.*;
+
 
 public class Logger {
 
@@ -28,11 +28,7 @@ public class Logger {
         passwordField.sendKeys(password);
         passwordField.submit();
 
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
+        Util.waitForContentLoad(driver,"//*[@id=\"header-details-user-fullname\"]//img");
 
         WebElement profileImage = driver.findElement(By.xpath("//*[@id=\"header-details-user-fullname\"]//img"));
         String altString = profileImage.getAttribute("alt");
