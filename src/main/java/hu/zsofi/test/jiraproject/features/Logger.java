@@ -7,6 +7,8 @@ public class Logger {
 
     private WebDriver driver;
     private String baseUrl;
+    private static final String JIRA_USER_NAME = System.getenv("JIRA_USER_NAME");
+    private static final String JIRA_PASSWORD = System.getenv("JIRA_PASSWORD");
 
     public WebDriver getDriver() {
         return driver;
@@ -30,5 +32,9 @@ public class Logger {
         WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"login-form-password\"]"));
         passwordField.sendKeys(password);
         passwordField.submit();
+    }
+
+    public void loginValidCredentials(){
+        login(JIRA_USER_NAME, JIRA_PASSWORD);
     }
 }
