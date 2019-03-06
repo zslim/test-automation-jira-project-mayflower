@@ -7,6 +7,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Utils {
 
+    private static final String BASE_URL = "https://jira.codecool.codecanvas.hu/";
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
+
     public static void waitForContentLoad(WebDriver driver, String xpath) {
 
         WebDriverWait wait = new WebDriverWait(driver, 10);

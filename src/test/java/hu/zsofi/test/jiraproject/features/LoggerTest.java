@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class LoggerTest {
-    private String baseUrl = "https://jira.codecool.codecanvas.hu/";
+    private String baseUrl = Utils.getBaseUrl();
     private Logger logger;
     private String userImageXpath = "//*[@id=\"header-details-user-fullname\"]//img";
 
