@@ -19,10 +19,8 @@ class LoggerTest {
 
 
     @BeforeAll
-    static void setDriverPath() {
-        String driverProperty = System.getenv("DRIVER_PROPERTY");
-        String driverPath = System.getenv("DRIVER_PATH");
-        System.setProperty(driverProperty, driverPath);
+    static void setup() {
+        Utils.setDriverPath();
     }
 
     @BeforeEach
