@@ -1,6 +1,5 @@
 package hu.zsofi.test.jiraproject.features;
 
-import hu.zsofi.test.jiraproject.Utils;
 import org.openqa.selenium.*;
 
 
@@ -35,15 +34,11 @@ public class Logger extends Feature {
         loginValidCredentials();
 
         String profileMenuXpath = "//*[@id=\"header-details-user-fullname\"]";
-        Utils.waitForContentLoad(driver, profileMenuXpath);
-
-        WebElement profileMenu = driver.findElement(By.xpath(profileMenuXpath));
+        WebElement profileMenu = domHandler.waitAndGetElement(profileMenuXpath);
         profileMenu.click();
 
         String logoutXpath = "//*[@id='log_out']";
-        Utils.waitForContentLoad(driver, logoutXpath);
-
-        WebElement logoutOption = driver.findElement(By.xpath(logoutXpath));
+        WebElement logoutOption = domHandler.waitAndGetElement(logoutXpath);
         logoutOption.click();
     }
 }

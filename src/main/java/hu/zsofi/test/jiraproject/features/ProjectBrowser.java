@@ -1,7 +1,6 @@
 package hu.zsofi.test.jiraproject.features;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ProjectBrowser extends Feature {
@@ -16,7 +15,8 @@ public class ProjectBrowser extends Feature {
     public void navigateToBrowsePageVisually() {
         logger.loginValidCredentials();
 
-        WebElement projectMenuLink = driver.findElement(By.xpath("//*[@id=\"browse_link\"]"));
+        String projectMenuXpath = "//*[@id=\"browse_link\"]";
+        WebElement projectMenuLink = domHandler.waitAndGetElement(projectMenuXpath);
         projectMenuLink.click();
 
         WebElement projectViewOption = driver.findElement(By.xpath("//*[@id=\"project_view_all_link_lnk\"]"));
