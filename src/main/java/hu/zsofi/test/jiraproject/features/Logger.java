@@ -50,16 +50,19 @@ public class Logger {
     }
 
     public void secondaryLogin(){
-        driver.get("https://jira.codecool.codecanvas.hu/login.jsp");
+        String secondaryLoginUrl = "https://jira.codecool.codecanvas.hu/login.jsp";
+        driver.get(secondaryLoginUrl);
 
         setUserData(JIRA_USER_NAME, JIRA_PASSWORD);
     }
 
     private void setUserData(String jiraUserName, String jiraPassword) {
-        WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"login-form-username\"]"));
+        String userNameXPath = "//*[@id=\"login-form-username\"]";
+        WebElement userNameField = driver.findElement(By.xpath(userNameXPath));
         userNameField.sendKeys(jiraUserName);
 
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"login-form-password\"]"));
+        String passwordXPath = "//*[@id=\"login-form-password\"]";
+        WebElement passwordField = driver.findElement(By.xpath(passwordXPath));
         passwordField.sendKeys(jiraPassword);
         passwordField.submit();
     }
