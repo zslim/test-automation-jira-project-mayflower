@@ -4,18 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ProjectBrowser {
+public class ProjectBrowser extends Feature {
 
     private Logger logger;
-    private WebDriver driver;
 
     public ProjectBrowser(Logger logger) {
+        super(logger.getDriver());
         this.logger = logger;
-        this.driver = logger.getDriver();
-    }
-
-    public void closeDriver() {
-        driver.close();
     }
 
     public void navigateToBrowsePageVisually() {

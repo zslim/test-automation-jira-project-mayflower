@@ -4,24 +4,16 @@ import hu.zsofi.test.jiraproject.Utils;
 import org.openqa.selenium.*;
 
 
-public class Logger {
+public class Logger extends Feature {
 
-    private WebDriver driver;
     private String baseUrl;
     private static final String JIRA_USER_NAME = System.getenv("JIRA_USER_NAME");
     private static final String JIRA_PASSWORD = System.getenv("JIRA_PASSWORD");
 
-    public WebDriver getDriver() {
-        return driver;
-    }
 
     public Logger(WebDriver driver, String baseUrl) {
-        this.driver = driver;
+        super(driver);
         this.baseUrl = baseUrl;
-    }
-
-    public void closeDriver() {
-        driver.close();
     }
 
     public void login(String userName, String password) {

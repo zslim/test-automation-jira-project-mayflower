@@ -1,6 +1,7 @@
 package hu.zsofi.test.jiraproject.features;
 
 import hu.zsofi.test.jiraproject.Utils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,13 @@ class ProjectBrowserTest {
         projectBrowser = new ProjectBrowser(logger);
     }
 
+    @AfterEach
+    void closeDriver() {
+        projectBrowser.closeDriver();
+    }
+
     @Test
-    void navigateToBrowsePageVisually() {
+    void testNavigateToBrowsePageVisually() {
+
     }
 }
