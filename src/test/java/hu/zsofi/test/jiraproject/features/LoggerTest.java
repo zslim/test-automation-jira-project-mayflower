@@ -27,7 +27,7 @@ class LoggerTest {
 
     @BeforeEach
     void createLoggerInstance() {
-        logger = new Logger(new FirefoxDriver(), baseUrl);
+        logger = new Logger(new FirefoxDriver());
     }
 
     @AfterEach
@@ -38,7 +38,7 @@ class LoggerTest {
     @Test
     void testLoginValid() {
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
-        logger.loginValidCredentials();
+        logger.loginValidCredentials(baseUrl);
 
         WebDriver driver = logger.getDriver();
         Utils.waitForContentLoad(driver, userImageXpath);
@@ -48,10 +48,22 @@ class LoggerTest {
         assertEquals(expectedResult, altString);
     }
 
+    @Test
+    void testLogout() {
+        logger.logout(baseUrl);
+
+        WebDriver driver = logger.getDriver();
+        String loginXpath = "//*[@id='user-options']/a[contains(concat(' ', normalize-space(@class),' '),' login-link ')]";
+        Utils.waitForContentLoad(driver, loginXpath);
+
+        boolean isLoginPresent = Utils.isElementPresent(driver, loginXpath);
+        assertTrue(isLoginPresent);
+    }
+
 
     @Test
     void testLoginEmptyFields(){
-        logger.login("","");
+        logger.login("","", baseUrl);
         WebDriver driver = logger.getDriver();
         String logInButton = "//*[@id=\"usernameerror\"]/p";
 
@@ -62,7 +74,7 @@ class LoggerTest {
 
     @Test
     void testInvalidCredentials(){
-        logger.login("ecetes","uborka");
+        logger.login("ecetes","uborka", baseUrl);
         WebDriver driver = logger.getDriver();
         String logInButton = "//*[@id=\"usernameerror\"]/p";
 
@@ -73,17 +85,15 @@ class LoggerTest {
 
     @Test
     void testLoginValidSecondaryPage(){
-        Logger logger2 = new Logger(new FirefoxDriver(),"https://jira.codecool.codecanvas.hu/login.jsp");
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
-        logger2.loginValidCredentials();
 
-        WebDriver driver = logger2.getDriver();
+        WebDriver driver = logger.getDriver();
+        logger.loginValidCredentials("https://jira.codecool.codecanvas.hu/login.jsp");
+
         Utils.waitForContentLoad(driver, userImageXpath);
         WebElement profileImage = driver.findElement(By.xpath(userImageXpath));
         String altString = profileImage.getAttribute("alt");
 
         assertEquals(expectedResult, altString);
-
-        driver.close();
     }
 }

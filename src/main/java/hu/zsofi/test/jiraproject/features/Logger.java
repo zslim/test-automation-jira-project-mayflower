@@ -7,7 +7,6 @@ import org.openqa.selenium.*;
 public class Logger {
 
     private WebDriver driver;
-    private String baseUrl;
     private static final String JIRA_USER_NAME = System.getenv("JIRA_USER_NAME");
     private static final String JIRA_PASSWORD = System.getenv("JIRA_PASSWORD");
 
@@ -15,17 +14,16 @@ public class Logger {
         return driver;
     }
 
-    public Logger(WebDriver driver, String baseUrl) {
+    public Logger(WebDriver driver) {
         this.driver = driver;
-        this.baseUrl = baseUrl;
     }
 
     public void closeDriver() {
         driver.close();
     }
 
-    public void login(String userName, String password) {
-        driver.get(baseUrl);
+    public void login(String userName, String password, String url) {
+        driver.get(url);
 
         WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"login-form-username\"]"));
         userNameField.sendKeys(userName);
@@ -35,14 +33,17 @@ public class Logger {
         passwordField.submit();
     }
 
-    public void loginValidCredentials() {
-        login(JIRA_USER_NAME, JIRA_PASSWORD);
+    public void loginValidCredentials(String Url) {
+        login(JIRA_USER_NAME, JIRA_PASSWORD, Url);
     }
 
-    public void logout() {
-        loginValidCredentials();
+    public void logout(String url) {
+        loginValidCredentials(url);
 
-        WebElement profileMenu = driver.findElement(By.id("header-details-user-fullname"));
+        String profileMenuXpath = "//*[@id=\"header-details-user-fullname\"]";
+        Utils.waitForContentLoad(driver, profileMenuXpath);
+
+        WebElement profileMenu = driver.findElement(By.xpath(profileMenuXpath));
         profileMenu.click();
 
         String logoutXpath = "//*[@id='log_out']";
