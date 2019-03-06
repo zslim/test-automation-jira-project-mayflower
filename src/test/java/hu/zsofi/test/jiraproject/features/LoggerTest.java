@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class LoggerTest {
-    private String baseUrl = "https://jira.codecool.codecanvas.hu/";
     private Logger logger;
     private String userImageXpath = "//*[@id=\"header-details-user-fullname\"]//img";
 
@@ -27,7 +26,8 @@ class LoggerTest {
 
     @BeforeEach
     void createLoggerInstance() {
-        logger = new Logger(new FirefoxDriver());
+        String baseUrl = "https://jira.codecool.codecanvas.hu/";
+        logger = new Logger(new FirefoxDriver(), baseUrl);
     }
 
     @AfterEach
@@ -38,7 +38,7 @@ class LoggerTest {
     @Test
     void testLoginValid() {
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
-        logger.loginValidCredentials(baseUrl);
+        logger.loginValidCredentials();
 
         WebDriver driver = logger.getDriver();
         Utils.waitForContentLoad(driver, userImageXpath);
@@ -50,7 +50,7 @@ class LoggerTest {
 
     @Test
     void testLogout() {
-        logger.logout(baseUrl);
+        logger.logout();
 
         WebDriver driver = logger.getDriver();
         String loginXpath = "//*[@id='user-options']/a[contains(concat(' ', normalize-space(@class),' '),' login-link ')]";
@@ -63,7 +63,7 @@ class LoggerTest {
 
     @Test
     void testLoginEmptyFields(){
-        logger.login("","", baseUrl);
+        logger.login("","");
         WebDriver driver = logger.getDriver();
         String logInButton = "//*[@id=\"usernameerror\"]/p";
 
@@ -74,7 +74,7 @@ class LoggerTest {
 
     @Test
     void testInvalidCredentials(){
-        logger.login("ecetes","uborka", baseUrl);
+        logger.login("ecetes","uborka");
         WebDriver driver = logger.getDriver();
         String logInButton = "//*[@id=\"usernameerror\"]/p";
 
@@ -88,7 +88,7 @@ class LoggerTest {
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
 
         WebDriver driver = logger.getDriver();
-        logger.loginValidCredentials("https://jira.codecool.codecanvas.hu/login.jsp");
+        logger.secondaryLogin();
 
         Utils.waitForContentLoad(driver, userImageXpath);
         WebElement profileImage = driver.findElement(By.xpath(userImageXpath));

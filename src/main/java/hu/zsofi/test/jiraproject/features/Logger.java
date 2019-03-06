@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 
 
 public class Logger {
-
+    private String baseUrl;
     private WebDriver driver;
     private static final String JIRA_USER_NAME = System.getenv("JIRA_USER_NAME");
     private static final String JIRA_PASSWORD = System.getenv("JIRA_PASSWORD");
@@ -14,31 +14,27 @@ public class Logger {
         return driver;
     }
 
-    public Logger(WebDriver driver) {
+    public Logger(WebDriver driver, String url) {
         this.driver = driver;
+        this.baseUrl = url;
     }
 
     public void closeDriver() {
         driver.close();
     }
 
-    public void login(String userName, String password, String url) {
-        driver.get(url);
+    public void login(String userName, String password) {
+        driver.get(baseUrl);
 
-        WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"login-form-username\"]"));
-        userNameField.sendKeys(userName);
-
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"login-form-password\"]"));
-        passwordField.sendKeys(password);
-        passwordField.submit();
+        setUserData(userName, password);
     }
 
-    public void loginValidCredentials(String Url) {
-        login(JIRA_USER_NAME, JIRA_PASSWORD, Url);
+    public void loginValidCredentials() {
+        login(JIRA_USER_NAME, JIRA_PASSWORD);
     }
 
-    public void logout(String url) {
-        loginValidCredentials(url);
+    public void logout() {
+        loginValidCredentials();
 
         String profileMenuXpath = "//*[@id=\"header-details-user-fullname\"]";
         Utils.waitForContentLoad(driver, profileMenuXpath);
@@ -51,5 +47,20 @@ public class Logger {
 
         WebElement logoutOption = driver.findElement(By.xpath(logoutXpath));
         logoutOption.click();
+    }
+
+    public void secondaryLogin(){
+        driver.get("https://jira.codecool.codecanvas.hu/login.jsp");
+
+        setUserData(JIRA_USER_NAME, JIRA_PASSWORD);
+    }
+
+    private void setUserData(String jiraUserName, String jiraPassword) {
+        WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"login-form-username\"]"));
+        userNameField.sendKeys(jiraUserName);
+
+        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"login-form-password\"]"));
+        passwordField.sendKeys(jiraPassword);
+        passwordField.submit();
     }
 }
