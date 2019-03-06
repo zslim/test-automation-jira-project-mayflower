@@ -1,22 +1,28 @@
 package hu.zsofi.test.jiraproject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DomHandler {
     private static final int TIMEOUT_FOR_LOADING = 10;
-    WebDriver driver;
+    private WebDriver driver;
 
     public DomHandler(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void waitForLoad(String elementXpath) {
+    public WebElement getElement(String xpath) {
+        return driver.findElement(By.xpath(xpath));
+    }
+
+    public void waitForElementLoad(String xpath) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT_FOR_LOADING);
-        wait.until(_driver -> _driver.findElement(By.xpath(elementXpath)));
+        wait.until(_driver -> _driver.findElement(By.xpath(xpath)));
+    }
+
+    public void waitForPageLoad() {
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT_FOR_LOADING);
+        wait.until(_driver -> (JavascriptExecutor)_driver).executeScript("return document.readyState").equals("complete");
     }
 
     public boolean isElementPresent(String elementXpath) {
@@ -28,8 +34,8 @@ public class DomHandler {
         }
     }
 
-    public WebElement waitAndGetElement(String elementXpath) {
-        waitForLoad(elementXpath);
-        return driver.findElement(By.xpath(elementXpath));
+    public WebElement waitAndGetElement(String xpath) {
+        waitForElementLoad(xpath);
+        return getElement(xpath);
     }
 }

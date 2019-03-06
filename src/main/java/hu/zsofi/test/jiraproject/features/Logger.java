@@ -18,10 +18,10 @@ public class Logger extends Feature {
     public void login(String userName, String password) {
         driver.get(baseUrl);
 
-        WebElement userNameField = driver.findElement(By.xpath("//*[@id=\"login-form-username\"]"));
+        WebElement userNameField = domHandler.waitAndGetElement("//*[@id=\"login-form-username\"]");
         userNameField.sendKeys(userName);
 
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"login-form-password\"]"));
+        WebElement passwordField = domHandler.getElement("//*[@id=\"login-form-password\"]");
         passwordField.sendKeys(password);
         passwordField.submit();
     }

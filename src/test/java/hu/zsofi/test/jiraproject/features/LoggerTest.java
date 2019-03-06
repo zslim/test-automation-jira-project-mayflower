@@ -49,7 +49,7 @@ class LoggerTest {
         logger.logout();
 
         String loginXpath = "//*[@id='user-options']/a[contains(concat(' ', normalize-space(@class),' '),' login-link ')]";
-        domHandler.waitForLoad(loginXpath);
+        domHandler.waitForElementLoad(loginXpath);
         boolean isLoginPresent = domHandler.isElementPresent(loginXpath);
 
         assertTrue(isLoginPresent);
