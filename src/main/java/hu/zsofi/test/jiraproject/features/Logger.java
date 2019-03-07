@@ -14,9 +14,9 @@ public class Logger {
         return driver;
     }
 
-    public Logger(WebDriver driver, String url) {
+    public Logger(WebDriver driver, String baseUrl) {
         this.driver = driver;
-        this.baseUrl = url;
+        this.baseUrl = baseUrl;
     }
 
     public void closeDriver() {
@@ -26,7 +26,14 @@ public class Logger {
     public void login(String userName, String password) {
         driver.get(baseUrl);
 
-        setUserData(userName, password);
+        String userNameXPath = "//*[@id=\"login-form-username\"]";
+        WebElement userNameField = driver.findElement(By.xpath(userNameXPath));
+        userNameField.sendKeys(userName);
+
+        String passwordXPath = "//*[@id=\"login-form-password\"]";
+        WebElement passwordField = driver.findElement(By.xpath(passwordXPath));
+        passwordField.sendKeys(password);
+        passwordField.submit();
     }
 
     public void loginValidCredentials() {
@@ -49,21 +56,18 @@ public class Logger {
         logoutOption.click();
     }
 
-    public void secondaryLogin(){
+    public void secondaryLoginValid(){
         String secondaryLoginUrl = "https://jira.codecool.codecanvas.hu/login.jsp";
         driver.get(secondaryLoginUrl);
 
-        setUserData(JIRA_USER_NAME, JIRA_PASSWORD);
-    }
-
-    private void setUserData(String jiraUserName, String jiraPassword) {
         String userNameXPath = "//*[@id=\"login-form-username\"]";
         WebElement userNameField = driver.findElement(By.xpath(userNameXPath));
-        userNameField.sendKeys(jiraUserName);
+        userNameField.sendKeys(JIRA_USER_NAME);
 
         String passwordXPath = "//*[@id=\"login-form-password\"]";
         WebElement passwordField = driver.findElement(By.xpath(passwordXPath));
-        passwordField.sendKeys(jiraPassword);
+        passwordField.sendKeys(JIRA_PASSWORD);
         passwordField.submit();
     }
+
 }

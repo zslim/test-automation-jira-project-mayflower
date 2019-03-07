@@ -88,7 +88,7 @@ class LoggerTest {
         String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
 
         WebDriver driver = logger.getDriver();
-        logger.secondaryLogin();
+        logger.secondaryLoginValid();
 
         Utils.waitForContentLoad(driver, userImageXpath);
         WebElement profileImage = driver.findElement(By.xpath(userImageXpath));
