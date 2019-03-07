@@ -25,9 +25,9 @@ public class DomHandler {
         wait.until(_driver -> ((JavascriptExecutor)_driver).executeScript("return document.readyState").equals("complete"));
     }
 
-    public boolean isElementPresent(String elementXpath) {
+    public boolean isElementPresent(String xpath) {
         try {
-            driver.findElement(By.xpath(elementXpath));
+            driver.findElement(By.xpath(xpath));
             return true;
         } catch (NoSuchElementException e) {
             return false;
@@ -37,5 +37,10 @@ public class DomHandler {
     public WebElement waitAndGetElement(String xpath) {
         waitForElementLoad(xpath);
         return getElement(xpath);
+    }
+
+    public boolean isPresentAfterWaiting(String xpath) {
+        waitForElementLoad(xpath);
+        return isElementPresent(xpath);
     }
 }

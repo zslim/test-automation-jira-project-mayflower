@@ -41,4 +41,19 @@ public class Logger extends Feature {
         WebElement logoutOption = domHandler.waitAndGetElement(logoutXpath);
         logoutOption.click();
     }
+
+    public void secondaryLoginValid(){
+        String secondaryLoginUrl = "https://jira.codecool.codecanvas.hu/login.jsp";
+        driver.get(secondaryLoginUrl);
+
+        String userNameXPath = "//*[@id=\"login-form-username\"]";
+        WebElement userNameField = domHandler.getElement(userNameXPath);
+        userNameField.sendKeys(JIRA_USER_NAME);
+
+        String passwordXPath = "//*[@id=\"login-form-password\"]";
+        WebElement passwordField = domHandler.getElement(passwordXPath);
+        passwordField.sendKeys(JIRA_PASSWORD);
+        passwordField.submit();
+    }
+
 }
