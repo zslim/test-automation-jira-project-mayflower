@@ -22,7 +22,7 @@ public class DomHandler {
 
     public void waitForPageLoad() {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT_FOR_LOADING);
-        wait.until(_driver -> (JavascriptExecutor)_driver).executeScript("return document.readyState").equals("complete");
+        wait.until(_driver -> ((JavascriptExecutor)_driver).executeScript("return document.readyState").equals("complete"));
     }
 
     public boolean isElementPresent(String elementXpath) {
