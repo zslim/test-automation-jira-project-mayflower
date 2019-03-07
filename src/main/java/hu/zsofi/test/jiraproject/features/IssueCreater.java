@@ -16,10 +16,47 @@ public class IssueCreater extends Feature {
         this.domHandler = new DomHandler(driver);
     }
 
-    public void openIssueForm(){
-        String createIssueButtonXPath ="//*[@id=\"create_link\"]";
+    public void openIssueForm() {
+        String createIssueButtonXPath = "//*[@id=\"create_link\"]";
         logger.loginValidCredentials();
         WebElement createIssueButton = domHandler.waitAndGetElement(createIssueButtonXPath);
         createIssueButton.click();
+    }
+
+    public String navigateToNewIssue() {
+        domHandler.getDriver().get("https://jira.codecool.codecanvas.hu/secure/Dashboard.jspa");
+
+        String issuesXpath = "//*[@id=\"find_link\"]";
+        WebElement issues = domHandler.getClickableElement(issuesXpath);
+        issues.click();
+
+        String issuesMoreXpath = "//*[@id=\"issue_lnk_more_lnk\"]";
+        WebElement issuesMore = domHandler.waitAndGetElement(issuesMoreXpath);
+        issuesMore.click();
+
+        String myIssuesXpath = "//*[@id=\"navigator-sidebar\"]//a[contains(text(), \"me\")]";
+        WebElement myIssues = domHandler.getClickableElement(myIssuesXpath);
+        myIssues.click();
+
+        String myNewIssueXpath = "//*[@id=\"content\"]//span[contains(text(),\"Nice\")]";
+        WebElement myNewIssue = domHandler.getClickableElement(myNewIssueXpath);
+        myNewIssue.click();
+
+        return myIssuesXpath;
+    }
+
+    public void deleteIssue() {
+
+        String issueMoreXpath = "//*[@id=\"opsbar-operations_more\"]";
+        WebElement issueMore = domHandler.getClickableElement(issueMoreXpath);
+        issueMore.click();
+
+        String deleteXpath = "//*[@id=\"delete-issue\"]/a";
+        WebElement delete = domHandler.getClickableElement(deleteXpath);
+        delete.click();
+
+        String deleteConfirmXpath = "//*[@id=\"delete-issue-submit\"]";
+        WebElement deleteConfirm = domHandler.getClickableElement(deleteConfirmXpath);
+        deleteConfirm.click();
     }
 }

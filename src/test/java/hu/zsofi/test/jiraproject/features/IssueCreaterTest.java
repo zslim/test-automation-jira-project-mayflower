@@ -2,12 +2,10 @@ package hu.zsofi.test.jiraproject.features;
 
 import hu.zsofi.test.jiraproject.DomHandler;
 import hu.zsofi.test.jiraproject.Utils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,14 +28,23 @@ class CreateIssueTest {
     }
 
     @AfterEach
-    void closeDriver() {
+    void teardown() {
+        issueCreater.deleteIssue();
         issueCreater.closeDriver();
     }
 
+
     @Test
-    void openCreateIssueForm(){
+    void createIssueMandatoryFieldsFilled() {
         issueCreater.openIssueForm();
-        assertTrue(domHandler.isPresentAfterWaiting(createIssueTitleXPath));
+        domHandler.waitForElementLoad(createIssueTitleXPath);
+
+        String summaryFieldXpath = "//*[@id=\"summary\"]";
+        WebElement summaryField = domHandler.getElement(summaryFieldXpath);
+        summaryField.sendKeys("Nice Summary");
+        summaryField.submit();
+
+        assertTrue(domHandler.isPresentAfterWaiting(issueCreater.navigateToNewIssue()));
     }
 
 }
