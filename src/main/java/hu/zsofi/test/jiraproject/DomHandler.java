@@ -3,6 +3,8 @@ package hu.zsofi.test.jiraproject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class DomHandler {
     private static final int TIMEOUT_FOR_LOADING = 10;
     private WebDriver driver;
@@ -13,6 +15,10 @@ public class DomHandler {
 
     public WebElement getElement(String xpath) {
         return driver.findElement(By.xpath(xpath));
+    }
+
+    public List<WebElement> getListOfElements(String xpath) {
+        return driver.findElements(By.xpath(xpath));
     }
 
     public void waitForElementLoad(String xpath) {

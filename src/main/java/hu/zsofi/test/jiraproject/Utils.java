@@ -2,7 +2,7 @@ package hu.zsofi.test.jiraproject;
 
 public class Utils {
 
-    private static final String BASE_URL = "https://jira.codecool.codecanvas.hu/";
+    private static final String BASE_URL = "https://jira.codecool.codecanvas.hu/";  // TODO: this should be public with no getter
 
     public static String getBaseUrl() {
         return BASE_URL;

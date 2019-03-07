@@ -33,7 +33,8 @@ public class ProjectBrowser extends Feature {
         WebElement projectMenuLink = domHandler.waitAndGetElement(projectMenuXpath);
         projectMenuLink.click();
 
-        WebElement projectViewOption = driver.findElement(By.xpath("//*[@id=\"project_view_all_link_lnk\"]"));
+        String allProjectXpath = "//*[@id=\"project_view_all_link_lnk\"]";
+        WebElement projectViewOption = domHandler.waitAndGetElement(allProjectXpath);
         projectViewOption.click();
     }
 
@@ -52,7 +53,7 @@ public class ProjectBrowser extends Feature {
         Normally as a tester I would create one environment with and one without existing projects.
          */
 
-        WebElement firstProjectLink = driver.findElement(By.xpath(firstProjectLinkXpath));
+        WebElement firstProjectLink = domHandler.getElement(firstProjectLinkXpath);
         firstProjectLink.click();
     }
 }

@@ -1,15 +1,14 @@
 package hu.zsofi.test.jiraproject.features;
 
 import hu.zsofi.test.jiraproject.DomHandler;
+import hu.zsofi.test.jiraproject.StringIntMap;
 import hu.zsofi.test.jiraproject.Utils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,5 +59,28 @@ class ProjectBrowserTest {
         String nameOfLoadedProject = projectTitle.getAttribute("title");
 
         assertEquals(firstProjectName, nameOfLoadedProject);
+    }
+
+    @Test
+    void testProjectListByType() {
+        String[] projectTypes = {"Software", "Business"};
+        Integer[] expectedNumbers = {7, 3};
+        Integer[] zeros = {0, 0};
+        StringIntMap<String, Integer> expectedResult = new StringIntMap<>(projectTypes, expectedNumbers);
+        StringIntMap<String, Integer> actualResult = new StringIntMap<>(projectTypes, zeros);
+
+        projectBrowser.navigateToBrowsePageVisually();
+
+        String projectTypeImgXpath = "//div[@id='projects']//img[@class='project-type-icon']";
+        List<WebElement> projectTypeImgs = domHandler.getListOfElements(projectTypeImgXpath);
+
+        for (WebElement img :
+                projectTypeImgs) {
+
+            String projectType = img.getAttribute("title");
+            actualResult.incrementValueByKey(projectType);
+        }
+
+        assertEquals(expectedResult, actualResult);
     }
 }
