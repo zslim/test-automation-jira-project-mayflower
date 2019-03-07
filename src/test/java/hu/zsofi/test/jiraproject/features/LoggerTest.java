@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class LoggerTest {
-    private String baseUrl = "https://jira.codecool.codecanvas.hu/";
     private Logger logger;
     private String userImageXpath = "//*[@id=\"header-details-user-fullname\"]//img";
 
@@ -27,6 +26,7 @@ class LoggerTest {
 
     @BeforeEach
     void createLoggerInstance() {
+        String baseUrl = "https://jira.codecool.codecanvas.hu/";
         logger = new Logger(new FirefoxDriver(), baseUrl);
     }
 
@@ -58,5 +58,42 @@ class LoggerTest {
 
         boolean isLoginPresent = Utils.isElementPresent(driver, loginXpath);
         assertTrue(isLoginPresent);
+    }
+
+
+    @Test
+    void testLoginEmptyFields(){
+        logger.login("","");
+        WebDriver driver = logger.getDriver();
+        String logInButton = "//*[@id=\"usernameerror\"]/p";
+
+        Utils.waitForContentLoad(driver, logInButton);
+
+        assertTrue(Utils.isElementPresent(driver, logInButton));
+    }
+
+    @Test
+    void testInvalidCredentials(){
+        logger.login("ecetes","uborka");
+        WebDriver driver = logger.getDriver();
+        String logInButton = "//*[@id=\"usernameerror\"]/p";
+
+        Utils.waitForContentLoad(driver, logInButton);
+
+        assertTrue(Utils.isElementPresent(driver, logInButton));
+    }
+
+    @Test
+    void testLoginValidSecondaryPage(){
+        String expectedResult = "User profile for " + System.getenv("JIRA_USER_FULL_NAME");
+
+        WebDriver driver = logger.getDriver();
+        logger.secondaryLoginValid();
+
+        Utils.waitForContentLoad(driver, userImageXpath);
+        WebElement profileImage = driver.findElement(By.xpath(userImageXpath));
+        String altString = profileImage.getAttribute("alt");
+
+        assertEquals(expectedResult, altString);
     }
 }
