@@ -44,7 +44,7 @@ class CreateIssueTest {
         summaryField.sendKeys("Nice Summary");
         summaryField.submit();
 
-        assertTrue(domHandler.isPresentAfterWaiting(issueCreater.navigateToNewIssue()));
+        assertTrue(issueCreater.isIssueCreated());
     }
 
 }
