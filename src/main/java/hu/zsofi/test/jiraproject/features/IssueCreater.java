@@ -62,4 +62,16 @@ public class IssueCreater extends Feature {
         navigateToNewIssue();
         return domHandler.isPresentAfterWaiting(myNewIssueXpath);
     }
+
+    public void createIssueMandatoryFieldsFilled(){
+        openIssueForm();
+        String createIssueTitleXPath = "//*[@id=\"create-issue-dialog\"]//h2";
+
+        domHandler.waitForElementLoad(createIssueTitleXPath);
+
+        String summaryFieldXpath = "//*[@id=\"summary\"]";
+        WebElement summaryField = domHandler.getElement(summaryFieldXpath);
+        summaryField.sendKeys("Nice Summary");
+        summaryField.submit();
+    }
 }

@@ -23,8 +23,6 @@ class CreateIssueTest {
     @BeforeEach
     void setupTest() {
         issueCreater = new IssueCreater(new FirefoxDriver());
-        domHandler = new DomHandler(issueCreater.getDriver());
-        createIssueTitleXPath = "//*[@id=\"create-issue-dialog\"]//h2";
     }
 
     @AfterEach
@@ -36,14 +34,7 @@ class CreateIssueTest {
 
     @Test
     void createIssueMandatoryFieldsFilled() {
-        issueCreater.openIssueForm();
-        domHandler.waitForElementLoad(createIssueTitleXPath);
-
-        String summaryFieldXpath = "//*[@id=\"summary\"]";
-        WebElement summaryField = domHandler.getElement(summaryFieldXpath);
-        summaryField.sendKeys("Nice Summary");
-        summaryField.submit();
-
+        issueCreater.createIssueMandatoryFieldsFilled();
         assertTrue(issueCreater.isIssueCreated());
     }
 
